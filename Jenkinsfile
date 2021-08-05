@@ -8,7 +8,7 @@ pipeline {
         stage ('checkout') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-herreraluis', url: 'https://github.com/herrera-luis/aws-cloudformation-eks']]])
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'cabrera-github', url: 'https://github.com/Yessenia-CabreraTW/aws-cloudformation-eks']]])
                 }
             }
         }
@@ -17,9 +17,9 @@ pipeline {
             steps {
                 script {
                     gitCommitHash = sh (script: 'git rev-parse --short HEAD', returnStdout: true)
-                    withDockerRegistry([credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/']) {
-                        sh "docker build -f api/Dockerfile ./api -t herreraluis/basic_example:${gitCommitHash}"
-                        sh "docker push herreraluis/basic_example:${gitCommitHash}"
+                    withDockerRegistry([credentialsId: 'cabrera-dockerhub', url: 'https://index.docker.io/v1/']) {
+                        sh "docker build -f api/Dockerfile ./api -t yccmtw/basic_example:${gitCommitHash}"
+                        sh "docker push yccmtw/basic_example:${gitCommitHash}"
                     }
                 }
             }
